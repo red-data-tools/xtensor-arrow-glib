@@ -12,7 +12,14 @@
 
 class TestArray < Test::Unit::TestCase
   def test_to_s
-    assert_equal(<<-ARRAY.chomp, Xtensor::Array.new.to_s)
+    data = [
+      1, 2, 3,
+      2, 5, 7,
+      2, 5, 7,
+    ]
+    array = Xtensor::Array.new(data)
+    array.reshape([3, 3])
+    assert_equal(<<-ARRAY.chomp, array.to_s)
 {{ 1.,  2.,  3.},
  { 2.,  5.,  7.},
  { 2.,  5.,  7.}}

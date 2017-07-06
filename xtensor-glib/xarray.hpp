@@ -14,9 +14,15 @@
 
 #pragma once
 
-#include <xtensor/xarray.hpp>
+#include <xtensor/xadapt.hpp>
 
 #include <xtensor-glib/xarray.h>
 
-GXtArray *gxt_array_new_raw(xt::xarray<double> *xt_array);
-xt::xarray<double> *gxt_array_get_raw(GXtArray *array);
+namespace gxt {
+  using xbuffer_adaptor_double =
+    xt::xbuffer_adaptor<double, xt::acquire_ownership>;
+  using xarray_adaptor_double =
+    xt::xarray_adaptor<xbuffer_adaptor_double,
+                       xt::layout_type::dynamic,
+                       std::vector<size_t>>;
+}

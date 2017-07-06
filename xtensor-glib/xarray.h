@@ -45,7 +45,7 @@ typedef struct _GXtArrayClass    GXtArrayClass;
 /**
  * GXtArray:
  *
- * It wraps `xt::xarray<double>`.
+ * It wraps `gxt::xarray_adaptor_double`.
  */
 struct _GXtArray
 {
@@ -60,8 +60,13 @@ struct _GXtArrayClass
 
 GType gxt_array_get_type(void) G_GNUC_CONST;
 
-GXtArray *gxt_array_new(void);
+GXtArray *gxt_array_new(const gdouble *values,
+                        gsize n_values);
 
 gchar *gxt_array_to_string(GXtArray *array);
+
+GXtArray *gxt_array_reshape(GXtArray *array,
+                            const gsize *shape,
+                            gsize n_dimensions);
 
 G_END_DECLS
