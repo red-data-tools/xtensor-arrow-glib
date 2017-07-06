@@ -16,4 +16,4 @@
 
 #include <xtensor-glib/xtensor-glib.h>
 
-#include <xtensor-glib/xarray.hpp>
+#include <xtensor-glib/double-array.hpp>

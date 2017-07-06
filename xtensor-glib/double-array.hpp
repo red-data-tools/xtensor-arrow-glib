@@ -16,13 +16,13 @@
 
 #include <xtensor/xadapt.hpp>
 
-#include <xtensor-glib/xarray.h>
+#include <xtensor-glib/double-array.h>
 
 namespace gxt {
-  using xbuffer_adaptor_double =
+  using double_buffer_adaptor =
     xt::xbuffer_adaptor<double, xt::acquire_ownership>;
-  using xarray_adaptor_double =
-    xt::xarray_adaptor<xbuffer_adaptor_double,
+  using double_array_adaptor =
+    xt::xarray_adaptor<double_buffer_adaptor,
                        xt::layout_type::dynamic,
                        std::vector<size_t>>;
 }

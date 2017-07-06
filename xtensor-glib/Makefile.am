@@ -41,15 +41,15 @@ libxtensor_glib_la_LIBADD =			\
 	$(GARROW_LIBS)
 
 libxtensor_glib_la_headers =			\
-	xarray.h				\
+	double-array.h				\
 	xtensor-glib.h
 
 libxtensor_glib_la_sources =			\
-	xarray.cpp				\
+	double-array.cpp			\
 	$(libxtensor_glib_la_headers)
 
 libxtensor_glib_la_cpp_headers =		\
-	xarray.hpp				\
+	double-array.hpp			\
 	xtensor-glib.hpp
 
 libxtensor_glib_la_SOURCES =			\

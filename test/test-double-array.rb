@@ -10,14 +10,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-class TestArray < Test::Unit::TestCase
+class TestDoubleArray < Test::Unit::TestCase
   def test_to_s
     data = [
       1, 2, 3,
       2, 5, 7,
       2, 5, 7,
     ]
-    array = Xtensor::Array.new(data)
+    array = Xtensor::DoubleArray.new(data)
     array.reshape([3, 3])
     assert_equal(<<-ARRAY.chomp, array.to_s)
 {{ 1.,  2.,  3.},

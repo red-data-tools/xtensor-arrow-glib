@@ -14,4 +14,4 @@
 
 #pragma once
 
-#include <xtensor-glib/xarray.h>
+#include <xtensor-glib/double-array.h>
