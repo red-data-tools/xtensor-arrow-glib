@@ -14,4 +14,6 @@
 
 #pragma once
 
-#include <xtensor-glib/double-array.h>
+#include <xtensor-arrow-glib/xtensor-arrow-glib.h>
+
+#include <xtensor-arrow-glib/double-array.hpp>

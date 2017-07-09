@@ -33,9 +33,9 @@
 
   <part id="data">
     <title>Data</title>
-    <chapter id="xarray">
-      <title>Array</title>
-      <xi:include href="xml/xarray.xml"/>
+    <chapter id="tensor">
+      <title>Tensor</title>
+      <xi:include href="xml/tensor.xml"/>
     </chapter>
   </part>
 

@@ -21,49 +21,51 @@ AM_CPPFLAGS =					\
 AM_CFLAGS =					\
 	$(GLIB_CFLAGS)				\
 	$(XTENSOR_CFLAGS)			\
-	$(GXTENSOR_CFLAGS)
+	$(ARROW_GLIB_CFLAGS)			\
+	$(XTENSOR_ARROW_GLIB_CFLAGS)
 
 lib_LTLIBRARIES =				\
-	libxtensor-glib.la
+	libxtensor-arrow-glib.la
 
-libxtensor_glib_la_CXXFLAGS =			\
+libxtensor_arrow_glib_la_CXXFLAGS =		\
 	$(GLIB_CFLAGS)				\
 	$(XTENSOR_CFLAGS)			\
-	$(GXTENSOR_CXXFLAGS)
+	$(ARROW_GLIB_CFLAGS)			\
+	$(XTENSOR_ARROW_GLIB_CXXFLAGS)
 
-libxtensor_glib_la_LDFLAGS =			\
+libxtensor_arrow_glib_la_LDFLAGS =		\
 	-version-info $(LT_VERSION_INFO)	\
 	-no-undefined
 
-libxtensor_glib_la_LIBADD =			\
+libxtensor_arrow_glib_la_LIBADD =		\
 	$(GLIB_LIBS)				\
 	$(XTENSOR_LIBS)				\
-	$(GARROW_LIBS)
+	$(ARROW_GLIB_LIBS)
 
-libxtensor_glib_la_headers =			\
+libxtensor_arrow_glib_la_headers =		\
 	double-array.h				\
-	xtensor-glib.h
+	xtensor-arrow-glib.h
 
-libxtensor_glib_la_sources =			\
+libxtensor_arrow_glib_la_sources =		\
 	double-array.cpp			\
-	$(libxtensor_glib_la_headers)
+	$(libxtensor_arrow_glib_la_headers)
 
-libxtensor_glib_la_cpp_headers =		\
+libxtensor_arrow_glib_la_cpp_headers =		\
 	double-array.hpp			\
-	xtensor-glib.hpp
+	xtensor-arrow-glib.hpp
 
-libxtensor_glib_la_SOURCES =			\
-	$(libxtensor_glib_la_sources)		\
-	$(libxtensor_glib_la_cpp_headers)
+libxtensor_arrow_glib_la_SOURCES =			\
+	$(libxtensor_arrow_glib_la_sources)		\
+	$(libxtensor_arrow_glib_la_cpp_headers)
 
-xtensor_glib_includedir = $(includedir)/xtensor-glib
-xtensor_glib_include_HEADERS =			\
-	$(libxtensor_glib_la_headers)		\
-	$(libxtensor_glib_la_cpp_headers)
+xtensor_arrow_glib_includedir = $(includedir)/xtensor-arrow-glib
+xtensor_arrow_glib_include_HEADERS =			\
+	$(libxtensor_arrow_glib_la_headers)		\
+	$(libxtensor_arrow_glib_la_cpp_headers)
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA =				\
-	xtensor-glib.pc
+	xtensor-arrow-glib.pc
 
 # GObject Introspection
 -include $(INTROSPECTION_MAKEFILE)
@@ -72,21 +74,21 @@ INTROSPECTION_SCANNER_ARGS =
 INTROSPECTION_COMPILER_ARGS =
 
 if HAVE_INTROSPECTION
-xtensor-1.0.gir: libxtensor-glib.la
-xtensor_1_0_gir_PACKAGES =			\
-	gobject-2.0
-xtensor_1_0_gir_EXPORT_PACKAGES = xtensor
-xtensor_1_0_gir_INCLUDES =			\
-	GObject-2.0
-xtensor_1_0_gir_CFLAGS =			\
+xtensor-arrow-1.0.gir: libxtensor-arrow-glib.la
+xtensor_arrow_1_0_gir_PACKAGES =		\
+	arrow-glib
+xtensor_arrow_1_0_gir_EXPORT_PACKAGES = xtensor-arrow
+xtensor_arrow_1_0_gir_INCLUDES =			\
+	Arrow-1.0
+xtensor_arrow_1_0_gir_CFLAGS =			\
 	$(AM_CPPFLAGS)
-xtensor_1_0_gir_LIBS = libxtensor-glib.la
-xtensor_1_0_gir_FILES = $(libxtensor_glib_la_sources)
-xtensor_1_0_gir_SCANNERFLAGS =			\
+xtensor_arrow_1_0_gir_LIBS = libxtensor-arrow-glib.la
+xtensor_arrow_1_0_gir_FILES = $(libxtensor_arrow_glib_la_sources)
+xtensor_arrow_1_0_gir_SCANNERFLAGS =		\
 	--warn-all				\
-	--identifier-prefix=GXt			\
-	--symbol-prefix=gxt
-INTROSPECTION_GIRS += xtensor-1.0.gir
+	--identifier-prefix=GXtArrow		\
+	--symbol-prefix=gxt_arrow
+INTROSPECTION_GIRS += xtensor-arrow-1.0.gir
 
 girdir = $(datadir)/gir-1.0
 gir_DATA = $(INTROSPECTION_GIRS)

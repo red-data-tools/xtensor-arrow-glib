@@ -16,7 +16,7 @@
 #  include <config.h>
 #endif
 
-#include <xtensor-glib/double-array.hpp>
+#include <xtensor-arrow-glib/double-array.hpp>
 
 #include <xtensor/xio.hpp>
 
@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 /**
  * SECTION: array
  * @short_description: Array class for double
- * @include: xtensor-glib/xtensor-glib.h
+ * @include: xtensor-arrow-glib/xtensor-arrow-glib.h
  *
  * #GXtDoubleArray is a class for array of double.
  */

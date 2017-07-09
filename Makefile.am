@@ -13,7 +13,7 @@
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
 SUBDIRS =					\
-	xtensor-glib				\
+	xtensor-arrow-glib			\
 	doc
 
 EXTRA_DIST =					\
@@ -21,6 +21,6 @@ EXTRA_DIST =					\
 	NOTICE.txt				\
 	README.md
 
-xtensor_glib_docdir = ${datarootdir}/doc/xtensor-glib
-xtensor_glib_doc_DATA =				\
+xtensor_arrow_glib_docdir = ${datarootdir}/doc/xtensor-arrow-glib
+xtensor_arrow_glib_doc_DATA =			\
 	README.md

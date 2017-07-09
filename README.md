@@ -12,48 +12,55 @@
   limitations under the License.
 -->
 
-# xtensor GLib
+# xtensor Arrow GLib
 
-xtensor GLib is a wrapper library for xtensor. xtensor GLib provides C
-API.
+xtensor Arrow GLib is a xtensor and Apache Arrow integration
+library. xtensor Arrow GLib provides C API.
 
-xtensor GLib supports
+xtensor Arrow GLib supports
 [GObject Introspection](https://wiki.gnome.org/Projects/GObjectIntrospection).
 It means that you can create language bindings at runtime or compile
 time.
 
-For example, you can use Apache xtensor from Ruby by xtensor GLib and
+For example, you can use xtensor with Apache Arrow from Ruby by
+xtensor Arrow GLib,
+[red-arrow gem](https://rubygems.org/gems/red-arrow) and
 [gobject-introspection gem](https://rubygems.org/gems/gobject-introspection)
 with the following code:
 
 ```ruby
 # Generate bindings at runtime
 require "gi"
-Xtensor = GI.load("xtensor")
+XtensorArrow = GI.load("xtensor-arrow")
 
 # TODO
 ```
 
 ## Install
 
-You can use packages or build by yourself to install xtensor GLib. It's
-recommended that you use packages.
-
-Note that the packages are "unofficial". "Official" packages will be
-released in the future.
+You can use packages or build by yourself to install xtensor Arrow
+GLib. It's recommended that you use packages.
 
 ### Package
 
 There are supported platforms:
 
   * Debian GNU/Linux Jessie
+  * Debian GNU/Linux Stretch
   * Ubuntu 16.04 LTS or later
   * CentOS 7
 
 You can feedback to https://github.com/red-data-tools/arrow-packages
 about packages things.
 
-#### Debian GNU/Linux jessie
+#### Debian GNU/Linux Jessie
+
+Ensure installing `apt-transport-https` package:
+
+```text
+% sudo apt update
+% sudo apt install -y apt-transport-https
+```
 
 You need to add the following apt-lines to
 `/etc/apt/sources.list.d/groonga.list`:
@@ -71,10 +78,41 @@ Then you need to run the following command lines:
 % sudo apt update
 ```
 
-Now you can install xtensor GLib packages:
+Now you can install xtensor Arrow GLib packages:
 
 ```text
-% sudo apt install -y libxtensor-glib-dev
+% sudo apt install -y libxtensor-arrow-glib-dev
+```
+
+#### Debian GNU/Linux Stretch
+
+Ensure installing `apt-transport-https` package:
+
+```text
+% sudo apt update
+% sudo apt install -y apt-transport-https
+```
+
+You need to add the following apt-lines to
+`/etc/apt/sources.list.d/groonga.list`:
+
+```text
+deb https://packages.groonga.org/debian/ stretch main
+deb-src https://packages.groonga.org/debian/ stretch main
+```
+
+Then you need to run the following command lines:
+
+```text
+% sudo apt update
+% sudo apt install -y --allow-unauthenticated groonga-keyring
+% sudo apt update
+```
+
+Now you can install xtensor Arrow GLib packages:
+
+```text
+% sudo apt install -y libxtensor-arrow-glib-dev
 ```
 
 #### Ubuntu 16.04 LTS or later
@@ -87,10 +125,10 @@ You need to add an APT repository:
 % sudo apt update
 ```
 
-Now you can install xtensor GLib packages:
+Now you can install xtensor Arrow GLib packages:
 
 ```text
-% sudo apt install -y libxtensor-glib-dev
+% sudo apt install -y libxtensor-arrow-glib-dev
 ```
 
 #### CentOS 7
@@ -101,28 +139,28 @@ You need to add a Yum repository:
 % sudo yum install -y https://packages.groonga.org/centos/groonga-release-1.3.0-1.noarch.rpm
 ```
 
-Now you can install xtensor GLib packages:
+Now you can install xtensor arrow GLib packages:
 
 ```text
-% sudo yum install -y --enablerepo=epel xtensor-glib-devel
+% sudo yum install -y --enablerepo=epel xtensor-arrow-glib-devel
 ```
 
 ### How to build by users
 
-xtensor GLib users should use released source archive to build xtensor
-GLib:
+xtensor Arrow GLib users should use released source archive to build
+xtensor Arrow GLib:
 
 ```text
-% wget https://github.com/red-data-tools/xtensor-glib/releases/download/1.0.0/xtensor-glib-1.0.0.tar.gz
-% tar xf xtensor-glib-1.0.0.tar.gz
-% cd xtensor-glib-1.0.0
+% wget https://github.com/red-data-tools/xtensor-arrow-glib/releases/download/1.0.0/xtensor-arrow-glib-1.0.0.tar.gz
+% tar xf xtensor-arrow-glib-1.0.0.tar.gz
+% cd xtensor-arrow-glib-1.0.0
 ```
 
 You need to install [xtensor](https://github.com/QuantStack/xtensor)
-before you install xtensor GLib. See documents about how to install
-them.
+and [Apache Arrow](https://arrow.apache.org/) GLib before you install
+xtensor Arrow GLib. See documents about how to install them.
 
-You can build and install xtensor GLib after you install them:
+You can build and install xtensor Arrow GLib after you install them:
 
 ```text
 % ./configure
@@ -132,14 +170,13 @@ You can build and install xtensor GLib after you install them:
 
 ### How to build by developers
 
-
 You need to install [xtensor](https://github.com/QuantStack/xtensor)
-before you install xtensor GLib. See documents about how to install
-them.
+and [Apache Arrow](https://arrow.apache.org/) GLib before you install
+xtensor Arrow GLib. See documents about how to install them.
 
 You need [GTK-Doc](https://www.gtk.org/gtk-doc/) and
 [GObject Introspection](https://wiki.gnome.org/Projects/GObjectIntrospection)
-to build xtensor GLib. You can install them by the followings:
+to build xtensor Arrow GLib. You can install them by the followings:
 
 On Debian GNU/Linux or Ubuntu:
 
@@ -159,7 +196,7 @@ On macOS with [Homebrew](https://brew.sh/):
 % brew install -y gtk-doc gobject-introspection
 ```
 
-Now, you can build Arrow GLib:
+Now, you can build xtensor Arrow GLib:
 
 ```text
 % ./autogen.sh
@@ -170,14 +207,15 @@ Now, you can build Arrow GLib:
 
 ## Usage
 
-You can use xtensor GLib with C or other languages. If you use xtensor
-GLib with C, you use C API. If you use xtensor GLib with other
-languages, you use GObject Introspection based bindings.
+You can use xtensor Arrow GLib with C or other languages. If you use
+xtensor Arrow GLib with C, you use C API. If you use xtensor Arrow
+GLib with other languages, you use GObject Introspection based
+bindings.
 
 ### C
 
 You can find API reference in the
-`/usr/local/share/gtk-doc/html/xtensor-glib/` directory. If you
+`/usr/local/share/gtk-doc/html/xtensor-arrow-glib/` directory. If you
 specify `--prefix` to `configure`, the directory will be different.
 
 TODO: Examples

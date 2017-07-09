@@ -12,11 +12,11 @@
 
 AC_PREREQ(2.65)
 
-AC_INIT([xtensor-glib], [1.0.0])
+AC_INIT([xtensor-arrow-glib], [1.0.0])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 
-AC_CONFIG_SRCDIR([xtensor-glib/xtensor-glib.h])
+AC_CONFIG_SRCDIR([xtensor-arrow-glib/xtensor-arrow-glib.h])
 AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([1.13 foreign])
@@ -36,15 +36,15 @@ AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
 AC_SUBST(LT_VERSION_INFO)
 
-GXTENSOR_CFLAGS="-Wall"
-GXTENSOR_CXXFLAGS="-Wall"
+XTENSOR_ARROW_GLIB_CFLAGS="-Wall"
+XTENSOR_ARROW_GLIB_CXXFLAGS="-Wall"
 AC_ARG_ENABLE(debug,
   [AS_HELP_STRING([--enable-debug],
                   [Use debug flags (default=no)])],
-  [GXTENSOR_DEBUG="$enableval"],
-  [GXTENSOR_DEBUG="no"])
-if test "x$GXTENSOR_DEBUG" != "xno"; then
-  GXTENSOR_DEBUG="yes"
+  [XTENSOR_ARROW_GLIB_DEBUG="$enableval"],
+  [XTENSOR_ARROW_GLIB_DEBUG="no"])
+if test "x$XTENSOR_ARROW_GLIB_DEBUG" != "xno"; then
+  XTENSOR_ARROW_GLIB_DEBUG="yes"
   if test "$CLANG" = "yes"; then
     CFLAGS="$CFLAGS -O0 -g"
     CXXFLAGS="$CXXFLAGS -O0 -g"
@@ -53,8 +53,8 @@ if test "x$GXTENSOR_DEBUG" != "xno"; then
     CXXFLAGS="$CXXFLAGS -O0 -g3"
   fi
 fi
-AC_SUBST(GXTENSOR_CFLAGS)
-AC_SUBST(GXTENSOR_CXXFLAGS)
+AC_SUBST(XTENSOR_ARROW_GLIB_CFLAGS)
+AC_SUBST(XTENSOR_ARROW_GLIB_CXXFLAGS)
 
 AM_PATH_GLIB_2_0([2.32.4], [], [], [gobject])
 
@@ -62,12 +62,12 @@ GOBJECT_INTROSPECTION_REQUIRE([1.32.1])
 GTK_DOC_CHECK([1.18-2])
 
 PKG_CHECK_MODULES([XTENSOR], [xtensor])
-PKG_CHECK_MODULES([XTENSOR], [xtensor])
+PKG_CHECK_MODULES([ARROW_GLIB], [arrow-glib])
 
 AC_CONFIG_FILES([
   Makefile
-  xtensor-glib/Makefile
-  xtensor-glib/xtensor-glib.pc
+  xtensor-arrow-glib/Makefile
+  xtensor-arrow-glib/xtensor-arrow-glib.pc
   doc/Makefile
   doc/reference/Makefile
 ])

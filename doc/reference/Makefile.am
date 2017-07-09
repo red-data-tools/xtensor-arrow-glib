@@ -10,27 +10,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DOC_MODULE = parquet-glib
+DOC_MODULE = xtensor-arrow-glib
 
 DOC_MAIN_SGML_FILE = $(DOC_MODULE)-docs.sgml
 
 DOC_SOURCE_DIR =				\
-	$(top_srcdir)/parquet-glib
+	$(top_srcdir)/xtensor-arrow-glib
 
-SCAN_OPTIONS =						\
-	--deprecated-guards="GPARQUET_DISABLE_DEPRECATED"
+SCAN_OPTIONS =							\
+	--deprecated-guards="GXT_ARROW_DISABLE_DEPRECATED"
 
 MKDB_OPTIONS =					\
-	--name-space=gparquet			\
+	--name-space=gxt_arrow			\
 	--source-suffixes="c,cpp,h"
 
 HFILE_GLOB =					\
-	$(top_srcdir)/parquet-glib/*.h
+	$(top_srcdir)/xtensor-arrow-glib/*.h
 
 IGNORE_HFILES =
 
 CFILE_GLOB =					\
-	$(top_srcdir)/parquet-glib/*.cpp
+	$(top_srcdir)/xtensor-arrow-glib/*.cpp
 
 AM_CPPFLAGS =					\
 	-I$(top_builddir)			\
@@ -38,10 +38,10 @@ AM_CPPFLAGS =					\
 
 AM_CFLAGS =					\
 	$(GLIB_CFLAGS)				\
-	$(PARQUET_CFLAGS)
+	$(XTENSOR_ARROW_CFLAGS)
 
-GTKDOC_LIBS =						\
-	$(top_builddir)/parquet-glib/libparquet-glib.la
+GTKDOC_LIBS =								\
+	$(top_builddir)/xtensor-arrow-glib/libxtensor-arrow-glib.la
 
 include $(srcdir)/gtk-doc.make
 

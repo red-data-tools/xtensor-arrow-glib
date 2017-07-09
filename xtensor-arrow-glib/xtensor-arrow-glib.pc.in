@@ -15,9 +15,9 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: xtensor GLib
-Description: C API for xtensor based on GLib
+Name: xtensor Arrow GLib
+Description: C API for xtensor and Apache Arrow based on GLib
 Version: @VERSION@
-Libs: -L${libdir} -lxtensor-glib
+Libs: -L${libdir} -lxtensor-arrow-glib
 Cflags: -I${includedir}
-Requires: gobject-2.0 xtensor
+Requires: xtensor arrow-glib
