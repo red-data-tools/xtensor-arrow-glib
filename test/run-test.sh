@@ -13,7 +13,7 @@
 # limitations under the License.
 
 base_dir="$(cd .; pwd)"
-lib_dir="${base_dir}/xtensor-glib/.libs"
+lib_dir="${base_dir}/xtensor-arrow-glib/.libs"
 
 LD_LIBRARY_PATH="${lib_dir}:${LD_LIBRARY_PATH}"
 

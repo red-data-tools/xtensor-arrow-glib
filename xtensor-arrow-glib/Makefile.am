@@ -74,21 +74,21 @@ INTROSPECTION_SCANNER_ARGS =
 INTROSPECTION_COMPILER_ARGS =
 
 if HAVE_INTROSPECTION
-xtensor-arrow-1.0.gir: libxtensor-arrow-glib.la
-xtensor_arrow_1_0_gir_PACKAGES =		\
+XtensorArrow-1.0.gir: libxtensor-arrow-glib.la
+XtensorArrow_1_0_gir_PACKAGES =			\
 	arrow-glib
-xtensor_arrow_1_0_gir_EXPORT_PACKAGES = xtensor-arrow
-xtensor_arrow_1_0_gir_INCLUDES =			\
+XtensorArrow_1_0_gir_EXPORT_PACKAGES = XtensorArrow
+XtensorArrow_1_0_gir_INCLUDES =			\
 	Arrow-1.0
-xtensor_arrow_1_0_gir_CFLAGS =			\
+XtensorArrow_1_0_gir_CFLAGS =			\
 	$(AM_CPPFLAGS)
-xtensor_arrow_1_0_gir_LIBS = libxtensor-arrow-glib.la
-xtensor_arrow_1_0_gir_FILES = $(libxtensor_arrow_glib_la_sources)
-xtensor_arrow_1_0_gir_SCANNERFLAGS =		\
+XtensorArrow_1_0_gir_LIBS = libxtensor-arrow-glib.la
+XtensorArrow_1_0_gir_FILES = $(libxtensor_arrow_glib_la_sources)
+XtensorArrow_1_0_gir_SCANNERFLAGS =		\
 	--warn-all				\
 	--identifier-prefix=GXtArrow		\
 	--symbol-prefix=gxt_arrow
-INTROSPECTION_GIRS += xtensor-arrow-1.0.gir
+INTROSPECTION_GIRS += XtensorArrow-1.0.gir
 
 girdir = $(datadir)/gir-1.0
 gir_DATA = $(INTROSPECTION_GIRS)

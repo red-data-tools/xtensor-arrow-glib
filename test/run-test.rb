@@ -16,7 +16,7 @@ require "pathname"
 require "test-unit"
 
 base_dir = Pathname(__dir__).parent
-typelib_dir = base_dir + "xtensor-glib"
+typelib_dir = base_dir + "xtensor-arrow-glib"
 test_dir = base_dir + "test"
 
 ENV["GI_TYPELIB_PATH"] = [
@@ -26,7 +26,7 @@ ENV["GI_TYPELIB_PATH"] = [
 
 require "gi"
 
-Xtensor = GI.load("xtensor")
+XtensorArrow = GI.load("XtensorArrow")
 
 require "tempfile"
 

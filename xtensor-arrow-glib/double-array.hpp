@@ -18,7 +18,7 @@
 
 #include <xtensor-arrow-glib/double-array.h>
 
-namespace gxt {
+namespace gxt_arrow {
   using double_buffer_adaptor =
     xt::xbuffer_adaptor<double, xt::acquire_ownership>;
   using double_array_adaptor =

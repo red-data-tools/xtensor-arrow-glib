@@ -17,7 +17,7 @@ class TestDoubleArray < Test::Unit::TestCase
       2, 5, 7,
       2, 5, 7,
     ]
-    array = Xtensor::DoubleArray.new(data)
+    array = XtensorArrow::DoubleArray.new(data)
     array.reshape([3, 3])
     assert_equal(<<-ARRAY.chomp, array.to_s)
 {{ 1.,  2.,  3.},

@@ -30,12 +30,12 @@ G_BEGIN_DECLS
  * @short_description: Array class for double
  * @include: xtensor-arrow-glib/xtensor-arrow-glib.h
  *
- * #GXtDoubleArray is a class for array of double.
+ * #GXtArrowDoubleArray is a class for array of double.
  */
 
-class GXtDoubleArrayData {
+class GXtArrowDoubleArrayData {
 public:
-  GXtDoubleArrayData(const gdouble *values, gsize n_values) :
+  GXtArrowDoubleArrayData(const gdouble *values, gsize n_values) :
     allocator_(),
     values_(copy_values(values, n_values)),
     buffer_(values_, n_values, allocator_),
@@ -43,19 +43,19 @@ public:
     array_(std::move(buffer_), shape_) {
   }
 
-  ~GXtDoubleArrayData() {
+  ~GXtArrowDoubleArrayData() {
   }
 
-  gxt::double_array_adaptor &array() {
+  gxt_arrow::double_array_adaptor &array() {
     return array_;
   }
 
 private:
-  gxt::double_buffer_adaptor::allocator_type allocator_;
+  gxt_arrow::double_buffer_adaptor::allocator_type allocator_;
   gdouble *values_;
-  gxt::double_buffer_adaptor buffer_;
+  gxt_arrow::double_buffer_adaptor buffer_;
   std::vector<size_t> shape_;
-  gxt::double_array_adaptor array_;
+  gxt_arrow::double_array_adaptor array_;
 
   gdouble *copy_values(const gdouble *values, gsize n_values) {
     auto new_values = allocator_.allocate(n_values);
@@ -64,63 +64,64 @@ private:
   }
 };
 
-typedef struct GXtDoubleArrayPrivate_ {
-  GXtDoubleArrayData *data;
-} GXtDoubleArrayPrivate;
+typedef struct GXtArrowDoubleArrayPrivate_ {
+  GXtArrowDoubleArrayData *data;
+} GXtArrowDoubleArrayPrivate;
 
-G_DEFINE_TYPE_WITH_PRIVATE(GXtDoubleArray,
-                           gxt_double_array,
+G_DEFINE_TYPE_WITH_PRIVATE(GXtArrowDoubleArray,
+                           gxt_arrow_double_array,
                            G_TYPE_OBJECT)
 
-#define GXT_DOUBLE_ARRAY_GET_PRIVATE(obj)               \
-  (G_TYPE_INSTANCE_GET_PRIVATE((obj),                   \
-                               GXT_TYPE_DOUBLE_ARRAY,   \
-                               GXtDoubleArrayPrivate))
+#define GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(obj)                 \
+  (G_TYPE_INSTANCE_GET_PRIVATE((obj),                           \
+                               GXT_ARROW_TYPE_DOUBLE_ARRAY,     \
+                               GXtArrowDoubleArrayPrivate))
 
 static void
-gxt_double_array_finalize(GObject *object)
+gxt_arrow_double_array_finalize(GObject *object)
 {
-  auto priv = GXT_DOUBLE_ARRAY_GET_PRIVATE(object);
+  auto priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(object);
 
   delete priv->data;
 
-  G_OBJECT_CLASS(gxt_double_array_parent_class)->finalize(object);
+  G_OBJECT_CLASS(gxt_arrow_double_array_parent_class)->finalize(object);
 }
 
 static void
-gxt_double_array_init(GXtDoubleArray *object)
+gxt_arrow_double_array_init(GXtArrowDoubleArray *object)
 {
 }
 
 static void
-gxt_double_array_class_init(GXtDoubleArrayClass *klass)
+gxt_arrow_double_array_class_init(GXtArrowDoubleArrayClass *klass)
 {
   auto gobject_class = G_OBJECT_CLASS(klass);
 
-  gobject_class->finalize = gxt_double_array_finalize;
+  gobject_class->finalize = gxt_arrow_double_array_finalize;
 }
 
 /**
- * gxt_double_array_new:
+ * gxt_arrow_double_array_new:
  * @values: (array length=n_values): The values of the array.
  * @n_values: The number of values.
  *
- * Returns: A newly created #GXtDoubleArray.
+ * Returns: A newly created #GXtArrowDoubleArray.
  *
  * Since: 1.0.0
  */
-GXtDoubleArray *
-gxt_double_array_new(const gdouble *values, gsize n_values)
+GXtArrowDoubleArray *
+gxt_arrow_double_array_new(const gdouble *values, gsize n_values)
 {
-  auto array = GXT_DOUBLE_ARRAY(g_object_new(GXT_TYPE_DOUBLE_ARRAY, NULL));
-  auto priv = GXT_DOUBLE_ARRAY_GET_PRIVATE(array);
-  priv->data = new GXtDoubleArrayData(values, n_values);
+  auto object = g_object_new(GXT_ARROW_TYPE_DOUBLE_ARRAY, NULL);
+  auto array = GXT_ARROW_DOUBLE_ARRAY(object);
+  auto priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array);
+  priv->data = new GXtArrowDoubleArrayData(values, n_values);
   return array;
 }
 
 /**
- * gxt_double_array_to_string:
- * @array: A #GXtDoubleArray.
+ * gxt_arrow_double_array_to_string:
+ * @array: A #GXtArrowDoubleArray.
  *
  * Returns: (nullable): The formatted array content.
  *
@@ -130,17 +131,17 @@ gxt_double_array_new(const gdouble *values, gsize n_values)
  * Since: 1.0.0
  */
 gchar *
-gxt_double_array_to_string(GXtDoubleArray *array)
+gxt_arrow_double_array_to_string(GXtArrowDoubleArray *array)
 {
-  auto priv = GXT_DOUBLE_ARRAY_GET_PRIVATE(array);
+  auto priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array);
   std::stringstream sink;
   sink << priv->data->array();
   return g_strdup(sink.str().c_str());
 }
 
 /**
- * gxt_double_array_reshape:
- * @array: A #GXtDoubleArray.
+ * gxt_arrow_double_array_reshape:
+ * @array: A #GXtArrowDoubleArray.
  * @shape: (array length=n_dimensions): The new shape.
  * @n_dimensions: The new number of dimensions.
  *
@@ -148,12 +149,12 @@ gxt_double_array_to_string(GXtDoubleArray *array)
  *
  * Since: 1.0.0
  */
-GXtDoubleArray *
-gxt_double_array_reshape(GXtDoubleArray *array,
-                  const gsize *shape,
-                  gsize n_dimensions)
+GXtArrowDoubleArray *
+gxt_arrow_double_array_reshape(GXtArrowDoubleArray *array,
+                               const gsize *shape,
+                               gsize n_dimensions)
 {
-  auto priv = GXT_DOUBLE_ARRAY_GET_PRIVATE(array);
+  auto priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array);
   std::vector<size_t> shape_vector;
   for (gsize i = 0; i < n_dimensions; ++i) {
     shape_vector.push_back(shape[i]);
