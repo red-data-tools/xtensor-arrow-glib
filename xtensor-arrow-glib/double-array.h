@@ -60,13 +60,26 @@ struct _GXtArrowDoubleArrayClass
 
 GType gxt_arrow_double_array_get_type(void) G_GNUC_CONST;
 
-GXtArrowDoubleArray *gxt_arrow_double_array_new(const gdouble *values,
-                                                gsize n_values);
+GXtArrowDoubleArray *gxt_arrow_double_array_new(const gsize *shape,
+                                                gsize n_dimensions);
+GXtArrowDoubleArray *gxt_arrow_double_array_new_values(const gsize *shape,
+                                                       gsize n_dimensions,
+                                                       const gdouble *values,
+                                                       gsize n_values);
 
 gchar *gxt_arrow_double_array_to_string(GXtArrowDoubleArray *array);
 
-GXtArrowDoubleArray *gxt_arrow_double_array_reshape(GXtArrowDoubleArray *array,
-                                                    const gsize *shape,
-                                                    gsize n_dimensions);
+GXtArrowDoubleArray *
+gxt_arrow_double_array_reshape(GXtArrowDoubleArray *array,
+                               const gsize *shape,
+                               gsize n_dimensions);
+GXtArrowDoubleArray *
+gxt_arrow_double_array_set_values(GXtArrowDoubleArray *array,
+                                  const gdouble *values,
+                                  gsize n_values);
+
+GXtArrowDoubleArray *
+gxt_arrow_double_array_plus(GXtArrowDoubleArray *array1,
+                            GXtArrowDoubleArray *array2);
 
 G_END_DECLS

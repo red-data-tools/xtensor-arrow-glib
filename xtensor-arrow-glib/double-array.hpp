@@ -19,10 +19,5 @@
 #include <xtensor-arrow-glib/double-array.h>
 
 namespace gxt_arrow {
-  using double_buffer_adaptor =
-    xt::xbuffer_adaptor<double, xt::acquire_ownership>;
-  using double_array_adaptor =
-    xt::xarray_adaptor<double_buffer_adaptor,
-                       xt::layout_type::dynamic,
-                       std::vector<size_t>>;
+  using double_array = xt::xarray<double>;
 }

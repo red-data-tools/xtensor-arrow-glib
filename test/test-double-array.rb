@@ -11,18 +11,42 @@
 # limitations under the License.
 
 class TestDoubleArray < Test::Unit::TestCase
+  def array(data)
+    shape = compute_shape(data)
+    values = data.flatten
+    XtensorArrow::DoubleArray.new(shape, values)
+  end
+
+  def compute_shape(data)
+    shape = []
+    while data.is_a?(Array)
+      shape << data.size
+      data = data[0]
+    end
+    shape
+  end
+
+  def setup
+    @array = array([
+                     [1, 2, 3],
+                     [4, 5, 6],
+                     [7, 8, 9],
+                   ])
+  end
+
   def test_to_s
-    data = [
-      1, 2, 3,
-      2, 5, 7,
-      2, 5, 7,
-    ]
-    array = XtensorArrow::DoubleArray.new(data)
-    array.reshape([3, 3])
-    assert_equal(<<-ARRAY.chomp, array.to_s)
+    assert_equal(<<-ARRAY.chomp, @array.to_s)
 {{ 1.,  2.,  3.},
- { 2.,  5.,  7.},
- { 2.,  5.,  7.}}
+ { 4.,  5.,  6.},
+ { 7.,  8.,  9.}}
+    ARRAY
+  end
+
+  def test_plus
+    assert_equal(<<-ARRAY.chomp, @array.plus(array([10.0, 11.0, 12.0])).to_s)
+{{ 11.,  13.,  15.},
+ { 14.,  16.,  18.},
+ { 17.,  19.,  21.}}
     ARRAY
   end
 end

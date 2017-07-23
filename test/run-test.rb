@@ -28,6 +28,4 @@ require "gi"
 
 XtensorArrow = GI.load("XtensorArrow")
 
-require "tempfile"
-
 exit(Test::Unit::AutoRunner.run(true, test_dir.to_s))
