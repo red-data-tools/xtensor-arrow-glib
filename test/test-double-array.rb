@@ -49,4 +49,12 @@ class TestDoubleArray < Test::Unit::TestCase
  { 17.,  19.,  21.}}
     ARRAY
   end
+
+  def test_pow
+    assert_equal(<<-ARRAY.chomp, @array.pow(array([2, 3, 4])).to_s)
+{{    1.,     8.,    81.},
+ {   16.,   125.,  1296.},
+ {   49.,   512.,  6561.}}
+    ARRAY
+  end
 end

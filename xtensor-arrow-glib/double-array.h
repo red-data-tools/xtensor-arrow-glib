@@ -81,5 +81,8 @@ gxt_arrow_double_array_set_values(GXtArrowDoubleArray *array,
 GXtArrowDoubleArray *
 gxt_arrow_double_array_plus(GXtArrowDoubleArray *array1,
                             GXtArrowDoubleArray *array2);
+GXtArrowDoubleArray *
+gxt_arrow_double_array_pow(GXtArrowDoubleArray *array1,
+                           GXtArrowDoubleArray *array2);
 
 G_END_DECLS

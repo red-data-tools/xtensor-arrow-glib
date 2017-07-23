@@ -199,6 +199,26 @@ gxt_arrow_double_array_set_values(GXtArrowDoubleArray *array,
   return array;
 }
 
+G_END_DECLS
+namespace {
+  template<class OPERATOR>
+  auto apply(GXtArrowDoubleArray *array1,
+             GXtArrowDoubleArray *array2)
+  {
+    auto priv1 = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array1);
+    auto priv2 = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array2);
+    gxt_arrow::double_array result =
+      OPERATOR::apply(*(priv1->data->array()), *(priv2->data->array()));
+
+    auto result_object = g_object_new(GXT_ARROW_TYPE_DOUBLE_ARRAY, NULL);
+    auto result_array = GXT_ARROW_DOUBLE_ARRAY(result_object);
+    auto result_priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(result_array);
+    result_priv->data = new GXtArrowDoubleArrayData(result);
+    return result_array;
+  }
+}
+G_BEGIN_DECLS
+
 /**
  * gxt_arrow_double_array_plus:
  * @array1: The addend.
@@ -212,16 +232,35 @@ GXtArrowDoubleArray *
 gxt_arrow_double_array_plus(GXtArrowDoubleArray *array1,
                             GXtArrowDoubleArray *array2)
 {
-  auto priv1 = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array1);
-  auto priv2 = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array2);
-  gxt_arrow::double_array result =
-    *(priv1->data->array()) + *(priv2->data->array());
+  struct plus {
+    static auto apply(gxt_arrow::double_array &gxt_array1,
+                      gxt_arrow::double_array &gxt_array2) {
+      return gxt_array1 + gxt_array2;
+    }
+  };
+  return apply<plus>(array1, array2);
+}
 
-  auto result_object = g_object_new(GXT_ARROW_TYPE_DOUBLE_ARRAY, NULL);
-  auto result_array = GXT_ARROW_DOUBLE_ARRAY(result_object);
-  auto result_priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(result_array);
-  result_priv->data = new GXtArrowDoubleArrayData(result);
-  return result_array;
+/**
+ * gxt_arrow_double_array_pow:
+ * @array1: The array to be raised.
+ * @array2: The array for power.
+ *
+ * Returns: (transfer full): The raised array.
+ *
+ * Since: 1.0.0
+ */
+GXtArrowDoubleArray *
+gxt_arrow_double_array_pow(GXtArrowDoubleArray *array1,
+                           GXtArrowDoubleArray *array2)
+{
+  struct pow {
+    static auto apply(gxt_arrow::double_array &gxt_array1,
+                      gxt_arrow::double_array &gxt_array2) {
+      return xt::pow(gxt_array1, gxt_array2);
+    }
+  };
+  return apply<pow>(array1, array2);
 }
 
 G_END_DECLS
