@@ -35,8 +35,8 @@ G_BEGIN_DECLS
 
 class GXtArrowDoubleArrayData {
 public:
-  GXtArrowDoubleArrayData(gxt_arrow::double_array array) :
-    array_(array) {
+  GXtArrowDoubleArrayData(gxt_arrow::double_array &&array) :
+    array_(std::forward<gxt_arrow::double_array>(array)) {
   }
 
   ~GXtArrowDoubleArrayData() {
@@ -106,7 +106,7 @@ gxt_arrow_double_array_new(const gsize *shape, gsize n_dimensions)
     gxt_shape[i] = shape[i];
   }
   gxt_arrow::double_array gxt_array(gxt_shape);
-  priv->data = new GXtArrowDoubleArrayData(gxt_array);
+  priv->data = new GXtArrowDoubleArrayData(std::move(gxt_array));
   return array;
 }
 
@@ -213,7 +213,7 @@ namespace {
     auto result_object = g_object_new(GXT_ARROW_TYPE_DOUBLE_ARRAY, NULL);
     auto result_array = GXT_ARROW_DOUBLE_ARRAY(result_object);
     auto result_priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(result_array);
-    result_priv->data = new GXtArrowDoubleArrayData(result);
+    result_priv->data = new GXtArrowDoubleArrayData(std::move(result));
     return result_array;
   }
 }
