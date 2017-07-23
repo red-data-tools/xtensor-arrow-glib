@@ -19,7 +19,6 @@
 #include <xtensor-arrow-glib/double-array.hpp>
 
 #include <xtensor/xio.hpp>
-#include <xtensor/xeval.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -215,8 +214,8 @@ gxt_arrow_double_array_plus(GXtArrowDoubleArray *array1,
 {
   auto priv1 = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array1);
   auto priv2 = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array2);
-  auto expression = *(priv1->data->array()) + *(priv2->data->array());
-  gxt_arrow::double_array &&result = xt::eval(expression);
+  gxt_arrow::double_array result =
+    *(priv1->data->array()) + *(priv2->data->array());
 
   auto result_object = g_object_new(GXT_ARROW_TYPE_DOUBLE_ARRAY, NULL);
   auto result_array = GXT_ARROW_DOUBLE_ARRAY(result_object);
