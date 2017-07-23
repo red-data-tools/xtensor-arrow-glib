@@ -98,16 +98,12 @@ gxt_arrow_double_array_class_init(GXtArrowDoubleArrayClass *klass)
 GXtArrowDoubleArray *
 gxt_arrow_double_array_new(const gsize *shape, gsize n_dimensions)
 {
-  auto object = g_object_new(GXT_ARROW_TYPE_DOUBLE_ARRAY, NULL);
-  auto array = GXT_ARROW_DOUBLE_ARRAY(object);
-  auto priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array);
   std::vector<size_t> gxt_shape(n_dimensions);
   for (gsize i = 0; i < n_dimensions; ++i) {
     gxt_shape[i] = shape[i];
   }
   gxt_arrow::double_array gxt_array(gxt_shape);
-  priv->data = new GXtArrowDoubleArrayData(std::move(gxt_array));
-  return array;
+  return gxt_arrow_double_array_new_raw(std::move(gxt_array));
 }
 
 /**
@@ -146,9 +142,9 @@ gxt_arrow_double_array_new_values(const gsize *shape,
 gchar *
 gxt_arrow_double_array_to_string(GXtArrowDoubleArray *array)
 {
-  auto priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array);
+  auto gxt_array = gxt_arrow_double_array_get_raw(array);
   std::stringstream sink;
-  sink << *(priv->data->array());
+  sink << *gxt_array;
   return g_strdup(sink.str().c_str());
 }
 
@@ -167,12 +163,12 @@ gxt_arrow_double_array_reshape(GXtArrowDoubleArray *array,
                                const gsize *shape,
                                gsize n_dimensions)
 {
-  auto priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array);
   std::vector<size_t> gxt_shape;
   for (gsize i = 0; i < n_dimensions; ++i) {
     gxt_shape.push_back(shape[i]);
   }
-  priv->data->array()->reshape(gxt_shape);
+  auto gxt_array = gxt_arrow_double_array_get_raw(array);
+  gxt_array->reshape(gxt_shape);
   return array;
 }
 
@@ -191,8 +187,7 @@ gxt_arrow_double_array_set_values(GXtArrowDoubleArray *array,
                                   const gdouble *values,
                                   gsize n_values)
 {
-  auto priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array);
-  auto &&gxt_array = *(priv->data->array());
+  auto &&gxt_array = *gxt_arrow_double_array_get_raw(array);
   for (gsize i = 0; i < n_values; ++i) {
     gxt_array(i) = values[i];
   }
@@ -205,16 +200,10 @@ namespace {
   auto apply(GXtArrowDoubleArray *array1,
              GXtArrowDoubleArray *array2)
   {
-    auto priv1 = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array1);
-    auto priv2 = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array2);
-    gxt_arrow::double_array result =
-      OPERATOR::apply(*(priv1->data->array()), *(priv2->data->array()));
-
-    auto result_object = g_object_new(GXT_ARROW_TYPE_DOUBLE_ARRAY, NULL);
-    auto result_array = GXT_ARROW_DOUBLE_ARRAY(result_object);
-    auto result_priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(result_array);
-    result_priv->data = new GXtArrowDoubleArrayData(std::move(result));
-    return result_array;
+    auto gxt_array1 = gxt_arrow_double_array_get_raw(array1);
+    auto gxt_array2 = gxt_arrow_double_array_get_raw(array2);
+    gxt_arrow::double_array result = OPERATOR::apply(*gxt_array1, *gxt_array2);
+    return gxt_arrow_double_array_new_raw(std::move(result));
   }
 }
 G_BEGIN_DECLS
@@ -264,3 +253,21 @@ gxt_arrow_double_array_pow(GXtArrowDoubleArray *array1,
 }
 
 G_END_DECLS
+
+GXtArrowDoubleArray *
+gxt_arrow_double_array_new_raw(gxt_arrow::double_array &&gxt_array)
+{
+  auto object = g_object_new(GXT_ARROW_TYPE_DOUBLE_ARRAY, NULL);
+  auto array = GXT_ARROW_DOUBLE_ARRAY(object);
+  auto priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array);
+  priv->data = new GXtArrowDoubleArrayData(std::move(gxt_array));
+  return array;
+}
+
+gxt_arrow::double_array *
+gxt_arrow_double_array_get_raw(GXtArrowDoubleArray *array)
+{
+  auto priv = GXT_ARROW_DOUBLE_ARRAY_GET_PRIVATE(array);
+  return priv->data->array();
+}
+

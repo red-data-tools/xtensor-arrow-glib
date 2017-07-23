@@ -21,3 +21,8 @@
 namespace gxt_arrow {
   using double_array = xt::xarray<double>;
 }
+
+GXtArrowDoubleArray *
+gxt_arrow_double_array_new_raw(gxt_arrow::double_array &&gxt_array);
+gxt_arrow::double_array *
+gxt_arrow_double_array_get_raw(GXtArrowDoubleArray *array);
