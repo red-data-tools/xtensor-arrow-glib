@@ -222,8 +222,8 @@ gxt_arrow_double_array_plus(GXtArrowDoubleArray *array1,
                             GXtArrowDoubleArray *array2)
 {
   struct plus {
-    static auto apply(gxt_arrow::double_array &gxt_array1,
-                      gxt_arrow::double_array &gxt_array2) {
+    static auto apply(const gxt_arrow::double_array &gxt_array1,
+                      const gxt_arrow::double_array &gxt_array2) {
       return gxt_array1 + gxt_array2;
     }
   };
@@ -244,8 +244,8 @@ gxt_arrow_double_array_pow(GXtArrowDoubleArray *array1,
                            GXtArrowDoubleArray *array2)
 {
   struct pow {
-    static auto apply(gxt_arrow::double_array &gxt_array1,
-                      gxt_arrow::double_array &gxt_array2) {
+    static auto apply(const gxt_arrow::double_array &gxt_array1,
+                      const gxt_arrow::double_array &gxt_array2) {
       return xt::pow(gxt_array1, gxt_array2);
     }
   };
