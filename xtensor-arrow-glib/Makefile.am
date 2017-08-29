@@ -43,10 +43,12 @@ libxtensor_arrow_glib_la_LIBADD =		\
 	$(ARROW_GLIB_LIBS)
 
 libxtensor_arrow_glib_la_headers =		\
+	arrow-array.h				\
 	double-array.h				\
 	xtensor-arrow-glib.h
 
 libxtensor_arrow_glib_la_sources =		\
+	arrow-array.cpp				\
 	double-array.cpp			\
 	$(libxtensor_arrow_glib_la_headers)
 

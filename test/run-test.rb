@@ -26,6 +26,7 @@ ENV["GI_TYPELIB_PATH"] = [
 
 require "gi"
 
+Arrow = GI.load("Arrow")
 XtensorArrow = GI.load("XtensorArrow")
 
 exit(Test::Unit::AutoRunner.run(true, test_dir.to_s))
